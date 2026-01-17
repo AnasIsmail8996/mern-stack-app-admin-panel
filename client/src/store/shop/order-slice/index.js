@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const initialState = {
   approvalURL: null,
   isLoading: false,
@@ -13,7 +13,7 @@ export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
     const response = await axios.post(
-      "http://localhost:5000/api/shop/order/create",
+      `${API_URL}/shop/order/create`,
       orderData
     );
     console.log(response.data.url, "Stripe session URL");
@@ -26,7 +26,7 @@ export const capturePayment = createAsyncThunk(
   "order/capturePayment",
   async ({ session_id }) => {
     const response = await axios.post(
-      "http://localhost:5000/api/shop/order/capture",
+      `${API_URL}/shop/order/capture`,
       { session_id },  
       { withCredentials: true }
     );
@@ -39,7 +39,7 @@ export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
   async (userId) => {
     const response = await axios.get(
-      `http://localhost:5000/api/shop/order/list/${userId}`
+      `${API_URL}/shop/order/list/${userId}`
     );
 
     return response.data;
@@ -50,7 +50,7 @@ export const getOrderDetails = createAsyncThunk(
   "/order/getOrderDetails",
   async (id) => {
     const response = await axios.get(
-      `http://localhost:5000/api/shop/order/details/${id}`
+      `${API_URL}/shop/order/details/${id}`
     );
 
     return response.data;
