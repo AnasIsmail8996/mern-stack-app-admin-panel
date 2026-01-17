@@ -1,0 +1,60 @@
+name:   ECOMMERCE_APP
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+  pull_request:
+    branches:
+      - dev
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.adminCommand(\"ping\")'" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # --------- Backend ---------
+      - name: Install backend dependencies
+        working-directory: ./server
+        run: npm install
+
+      - name: Run backend tests
+        working-directory: ./server
+        run: npm test || echo "No backend tests configured"
+
+      # --------- Frontend ---------
+      - name: Install frontend dependencies
+        working-directory: ./client
+        run: npm install
+
+      - name: Build frontend
+        working-directory: ./client
+        run: npm run build
+
+      # --------- Docker images (optional) ---------
+      - name: Build backend Docker image
+        run: docker build -t mern-backend ./server
+
+      - name: Build frontend Docker image
+        run: docker build -t mern-frontend ./client

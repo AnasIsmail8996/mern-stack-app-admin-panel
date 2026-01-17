@@ -5,7 +5,11 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+  "dev": "nodemon server.js",
+  "lint": "eslint .",
+  "lint:fix": "eslint . --fix",
+  "format": "prettier --write ."
+
   },
   "keywords": [],
   "author": "",
@@ -22,5 +26,9 @@
     "mongoose": "^9.0.0",
     "multer": "^2.0.2",
     "stripe": "^20.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.2",
+    "prettier": "^3.8.0"
   }
 }
