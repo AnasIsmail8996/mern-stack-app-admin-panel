@@ -2,13 +2,16 @@
 
 services:
   frontend:
-    build: ./client
+    build:
+      context: ./client
+      # args:  # optional, agar Dockerfile me ARG VITE_API_URL define kiya ho
+      #   VITE_API_URL: http://13.60.44.111:5000
     container_name: frontend
+    restart: always
     ports:
       - "5173:5173"
-    env_file:
-      - ./client/.env
-    restart: always
+    environment:
+      - VITE_API_URL=http://13.60.44.111:5000  
 
   backend:
     build: ./server
