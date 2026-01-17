@@ -1,6 +1,7 @@
-import ProductFilter from "@/components/shopping-view/filter";
+import ProductFilter from "@/components/shopping-view/Filter";
 import ProductDetailsDialog from "@/components/shopping-view/ProductDetails";
-import ShoppingProductTile from "../../components/shopping-view/ProductsTiles";
+import ShoppingProductTile from "@/components/shopping-view/ProductsTiles";
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,6 +10,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { useToast } from "@/hooks/use-toast";
 import { sortOptions } from "@/config";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
